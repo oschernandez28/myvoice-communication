@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { CardCategory, CommunicationCard } from "@/types/aac";
-import CommunicationCard as CardComponent from "@/components/CommunicationCard";
+import CommunicationCardComponent from "@/components/CommunicationCard";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -42,7 +42,7 @@ const CollapsibleCardGroup: React.FC<CollapsibleCardGroupProps> = ({
       <CollapsibleContent className="pt-3">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {cards.map((card) => (
-            <CardComponent
+            <CommunicationCardComponent
               key={card.id}
               card={card}
               onClick={onCardClick}
