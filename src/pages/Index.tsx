@@ -8,22 +8,14 @@ import CategoryTabs from "@/components/CategoryTabs";
 import { CommunicationCard as CardType, CardSuggestion } from "@/types/aac";
 import { getPredictionService } from "@/services/predictionService";
 import { getSpeechService } from "@/services/speechService";
+import CollapsibleCardGroup from "@/components/CollapsibleCardGroup";
 
 const Index = () => {
   const [selectedCards, setSelectedCards] = useState<CardType[]>([]);
   const [suggestions, setSuggestions] = useState<CardSuggestion[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Filter cards based on selected category
-  const filteredCards = selectedCategory 
-    ? communicationCards.filter(card => card.category === selectedCategory)
-    : communicationCards;
-
-  // Update suggestions when selected cards change
-  useEffect(() => {
-    updateSuggestions();
-  }, [selectedCards]);
+  const [viewMode, setViewMode] = useState<'hierarchical' | 'flat'>('hierarchical');
 
   // Initialize the prediction model
   useEffect(() => {
@@ -34,6 +26,11 @@ const Index = () => {
 
     initModel().catch(console.error);
   }, []);
+
+  // Update suggestions when selected cards change
+  useEffect(() => {
+    updateSuggestions();
+  }, [selectedCards]);
 
   // Get the current message text from selected cards
   const getMessageText = () => {
@@ -96,6 +93,22 @@ const Index = () => {
     speechService.speak(messageText);
   };
 
+  // Toggle between hierarchical and flat view
+  const toggleViewMode = () => {
+    setViewMode(viewMode === 'hierarchical' ? 'flat' : 'hierarchical');
+  };
+
+  // Group cards by category for hierarchical view
+  const cardsByCategory = categories.map(category => ({
+    category,
+    cards: communicationCards.filter(card => card.category === category.id)
+  }));
+
+  // Filter cards for flat view
+  const filteredCards = selectedCategory 
+    ? communicationCards.filter(card => card.category === selectedCategory)
+    : communicationCards;
+
   return (
     <div className="min-h-screen bg-aac-background p-4 md:p-8">
       <header className="mb-6">
@@ -126,28 +139,56 @@ const Index = () => {
           />
         </section>
 
-        {/* Category tabs */}
-        <section className="mb-4">
-          <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
-          <CategoryTabs 
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
+        {/* View mode toggle */}
+        <section className="mb-4 flex justify-end">
+          <button 
+            onClick={toggleViewMode}
+            className="px-3 py-1 bg-aac-teal text-white rounded-md text-sm"
+          >
+            {viewMode === 'hierarchical' ? 'Switch to Flat View' : 'Switch to Categories'}
+          </button>
         </section>
 
-        {/* Cards grid */}
-        <section>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {filteredCards.map((card) => (
-              <CommunicationCard
-                key={card.id}
-                card={card}
-                onClick={handleCardClick}
+        {viewMode === 'hierarchical' ? (
+          /* Hierarchical categories and cards */
+          <section>
+            <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
+            <div className="space-y-4">
+              {cardsByCategory.map(({ category, cards }) => (
+                <CollapsibleCardGroup
+                  key={category.id}
+                  category={category}
+                  cards={cards}
+                  onCardClick={handleCardClick}
+                />
+              ))}
+            </div>
+          </section>
+        ) : (
+          /* Flat view with category tabs and cards grid */
+          <>
+            <section className="mb-4">
+              <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
+              <CategoryTabs 
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
               />
-            ))}
-          </div>
-        </section>
+            </section>
+
+            <section>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {filteredCards.map((card) => (
+                  <CommunicationCard
+                    key={card.id}
+                    card={card}
+                    onClick={handleCardClick}
+                  />
+                ))}
+              </div>
+            </section>
+          </>
+        )}
       </div>
     </div>
   );

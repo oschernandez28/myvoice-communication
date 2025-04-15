@@ -5,6 +5,9 @@ export interface CommunicationCard {
   image: string; // Can be an emoji, icon name, or image URL
   category?: string;
   color?: string;
+  subcategory?: string; // Optional subcategory for deeper nesting
+  isExpandable?: boolean; // Indicates if this card expands to show more options
+  parentId?: string; // Optional reference to parent card if part of a hierarchy
 }
 
 export interface CardSuggestion {
