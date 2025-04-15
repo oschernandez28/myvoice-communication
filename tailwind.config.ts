@@ -61,7 +61,19 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// MyVoice AAC child-friendly colors 
+				'aac-blue': '#4A9DFF',
+				'aac-green': '#4CD964',
+				'aac-yellow': '#FFCC00',
+				'aac-red': '#FF3B30',
+				'aac-purple': '#9B87F5',
+				'aac-pink': '#FF6B8E',
+				'aac-orange': '#FF9500',
+				'aac-teal': '#5AC8FA',
+				'aac-background': '#F8F9FA',
+				'aac-text': '#333333',
+				'aac-border': '#E1E5EA'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
