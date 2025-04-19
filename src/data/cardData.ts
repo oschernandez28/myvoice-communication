@@ -2,62 +2,61 @@
 import { CommunicationCard, CardCategory } from "@/types/aac";
 
 export const categories: CardCategory[] = [
-  { id: "needs", name: "I Need", color: "aac-blue" },
-  { id: "wants", name: "I Want", color: "aac-green" },
-  { id: "feelings", name: "I Feel", color: "aac-yellow" },
-  { id: "actions", name: "Actions", color: "aac-purple" },
-  { id: "places", name: "Places", color: "aac-orange" },
-  { id: "people", name: "People", color: "aac-pink" },
+  { id: "subjects", name: "Who", color: "aac-blue" },
+  { id: "verbs", name: "Action", color: "aac-green" },
+  { id: "objects", name: "What", color: "aac-yellow" },
+  { id: "places", name: "Where", color: "aac-orange" },
+  { id: "feelings", name: "Feelings", color: "aac-pink" },
+  { id: "time", name: "When", color: "aac-purple" },
 ];
 
 export const communicationCards: CommunicationCard[] = [
-  // Needs
-  { id: "need-help", label: "I need help", image: "🆘", category: "needs", color: "aac-blue" },
-  { id: "need-bathroom", label: "I need bathroom", image: "🚽", category: "needs", color: "aac-blue" },
-  { id: "need-break", label: "I need a break", image: "⏸️", category: "needs", color: "aac-blue" },
-  { id: "need-quiet", label: "I need quiet", image: "🤫", category: "needs", color: "aac-blue" },
+  // Subjects (Who)
+  { id: "i", label: "I", image: "👤", category: "subjects", color: "aac-blue" },
+  { id: "we", label: "We", image: "👥", category: "subjects", color: "aac-blue" },
+  { id: "mom", label: "Mom", image: "👩", category: "subjects", color: "aac-blue" },
+  { id: "dad", label: "Dad", image: "👨", category: "subjects", color: "aac-blue" },
   
-  // Wants
-  { id: "want-water", label: "I want water", image: "💧", category: "wants", color: "aac-green" },
-  { id: "want-food", label: "I want food", image: "🍽️", category: "wants", color: "aac-green" },
-  { id: "want-play", label: "I want to play", image: "⚽", category: "wants", color: "aac-green" },
-  { id: "want-music", label: "I want music", image: "🎵", category: "wants", color: "aac-green" },
-  { id: "want-book", label: "I want a book", image: "📚", category: "wants", color: "aac-green" },
+  // Verbs (Actions)
+  { id: "want", label: "want", image: "✨", category: "verbs", color: "aac-green" },
+  { id: "need", label: "need", image: "❗", category: "verbs", color: "aac-green" },
+  { id: "go", label: "go", image: "🚶", category: "verbs", color: "aac-green" },
+  { id: "play", label: "play", image: "🎮", category: "verbs", color: "aac-green" },
+  { id: "eat", label: "eat", image: "🍽️", category: "verbs", color: "aac-green" },
+  { id: "drink", label: "drink", image: "🥤", category: "verbs", color: "aac-green" },
+  
+  // Objects (What)
+  { id: "water", label: "water", image: "💧", category: "objects", color: "aac-yellow" },
+  { id: "food", label: "food", image: "🍎", category: "objects", color: "aac-yellow" },
+  { id: "toy", label: "toy", image: "🧸", category: "objects", color: "aac-yellow" },
+  { id: "book", label: "book", image: "📚", category: "objects", color: "aac-yellow" },
+  { id: "ball", label: "ball", image: "⚽", category: "objects", color: "aac-yellow" },
+  
+  // Places (Where)
+  { id: "home", label: "home", image: "🏠", category: "places", color: "aac-orange" },
+  { id: "school", label: "school", image: "🏫", category: "places", color: "aac-orange" },
+  { id: "park", label: "park", image: "🏞️", category: "places", color: "aac-orange" },
+  { id: "bathroom", label: "bathroom", image: "🚽", category: "places", color: "aac-orange" },
   
   // Feelings
-  { id: "feel-happy", label: "I feel happy", image: "😊", category: "feelings", color: "aac-yellow" },
-  { id: "feel-sad", label: "I feel sad", image: "😢", category: "feelings", color: "aac-yellow" },
-  { id: "feel-angry", label: "I feel angry", image: "😡", category: "feelings", color: "aac-yellow" },
-  { id: "feel-tired", label: "I feel tired", image: "😴", category: "feelings", color: "aac-yellow" },
-  { id: "feel-scared", label: "I feel scared", image: "😨", category: "feelings", color: "aac-yellow" },
+  { id: "happy", label: "happy", image: "😊", category: "feelings", color: "aac-pink" },
+  { id: "sad", label: "sad", image: "😢", category: "feelings", color: "aac-pink" },
+  { id: "tired", label: "tired", image: "😴", category: "feelings", color: "aac-pink" },
+  { id: "angry", label: "angry", image: "😠", category: "feelings", color: "aac-pink" },
   
-  // Actions
-  { id: "action-go", label: "Let's go", image: "🚶", category: "actions", color: "aac-purple" },
-  { id: "action-stop", label: "Stop", image: "🛑", category: "actions", color: "aac-purple" },
-  { id: "action-eat", label: "Let's eat", image: "🍴", category: "actions", color: "aac-purple" },
-  { id: "action-play", label: "Let's play", image: "🎮", category: "actions", color: "aac-purple" },
-  
-  // Places
-  { id: "place-home", label: "Go home", image: "🏠", category: "places", color: "aac-orange" },
-  { id: "place-school", label: "Go to school", image: "🏫", category: "places", color: "aac-orange" },
-  { id: "place-park", label: "Go to park", image: "🏞️", category: "places", color: "aac-orange" },
-  { id: "place-store", label: "Go to store", image: "🏪", category: "places", color: "aac-orange" },
-  
-  // People
-  { id: "person-mom", label: "Mom", image: "👩", category: "people", color: "aac-pink" },
-  { id: "person-dad", label: "Dad", image: "👨", category: "people", color: "aac-pink" },
-  { id: "person-teacher", label: "Teacher", image: "👩‍🏫", category: "people", color: "aac-pink" },
-  { id: "person-friend", label: "Friend", image: "👫", category: "people", color: "aac-pink" },
+  // Time (When)
+  { id: "now", label: "now", image: "⌛", category: "time", color: "aac-purple" },
+  { id: "later", label: "later", image: "⏰", category: "time", color: "aac-purple" },
+  { id: "today", label: "today", image: "📅", category: "time", color: "aac-purple" },
+  { id: "tomorrow", label: "tomorrow", image: "🌅", category: "time", color: "aac-purple" },
 ];
 
-// Training pairs for prediction model
+// Training pairs for word combinations
 export const trainingPairs = [
-  { input: "I want", output: ["I want water", "I want to play", "I want food"] },
-  { input: "I need", output: ["I need help", "I need bathroom", "I need a break"] },
-  { input: "I feel", output: ["I feel happy", "I feel sad", "I feel tired"] },
-  { input: "Let's", output: ["Let's go", "Let's play", "Let's eat"] },
-  { input: "Go to", output: ["Go to park", "Go to school", "Go to store"] },
-  { input: "I want to", output: ["I want to play"] },
-  { input: "I need a", output: ["I need a break"] },
-  { input: "Go", output: ["Go home", "Go to park", "Go to school"] },
+  { input: "I", output: ["want", "need", "go", "play"] },
+  { input: "want", output: ["water", "food", "toy", "ball"] },
+  { input: "go", output: ["home", "school", "park", "bathroom"] },
+  { input: "play", output: ["ball", "toy"] },
+  { input: "need", output: ["water", "food", "bathroom"] },
 ];
+
