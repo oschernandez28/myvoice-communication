@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { categories, communicationCards } from "@/data/cardData";
 import CommunicationCard from "@/components/CommunicationCard";
@@ -17,7 +16,6 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [viewMode, setViewMode] = useState<'hierarchical' | 'flat'>('hierarchical');
 
-  // Initialize the prediction model
   useEffect(() => {
     const initModel = async () => {
       const predictionService = getPredictionService();
@@ -27,17 +25,14 @@ const Index = () => {
     initModel().catch(console.error);
   }, []);
 
-  // Update suggestions when selected cards change
   useEffect(() => {
     updateSuggestions();
   }, [selectedCards]);
 
-  // Get the current message text from selected cards
   const getMessageText = () => {
     return selectedCards.map(card => card.label).join(" ");
   };
 
-  // Update suggestions based on current input
   const updateSuggestions = async () => {
     if (selectedCards.length === 0) {
       setSuggestions([]);
@@ -48,7 +43,6 @@ const Index = () => {
       setIsLoading(true);
       const predictionService = getPredictionService();
       
-      // Use the last card or last few words for prediction
       const lastCard = selectedCards[selectedCards.length - 1];
       const inputText = lastCard.label;
       
@@ -61,12 +55,10 @@ const Index = () => {
     }
   };
 
-  // Handle card selection
   const handleCardClick = (card: CardType) => {
     setSelectedCards([...selectedCards, card]);
   };
 
-  // Handle suggestion selection
   const handleSuggestionClick = (suggestion: CardSuggestion) => {
     const card = communicationCards.find(c => c.label === suggestion.label);
     if (card) {
@@ -74,37 +66,30 @@ const Index = () => {
     }
   };
 
-  // Remove card from message
   const handleRemoveCard = (index: number) => {
     const updatedCards = [...selectedCards];
     updatedCards.splice(index, 1);
     setSelectedCards(updatedCards);
   };
 
-  // Clear all selected cards
   const handleClearAll = () => {
     setSelectedCards([]);
   };
 
-  // Speak the current message
-  const handleSpeakMessage = () => {
-    const messageText = getMessageText();
+  const handleSpeakMessage = (message: string) => {
     const speechService = getSpeechService();
-    speechService.speak(messageText);
+    speechService.speak(message);
   };
 
-  // Toggle between hierarchical and flat view
   const toggleViewMode = () => {
     setViewMode(viewMode === 'hierarchical' ? 'flat' : 'hierarchical');
   };
 
-  // Group cards by category for hierarchical view
   const cardsByCategory = categories.map(category => ({
     category,
     cards: communicationCards.filter(card => card.category === category.id)
   }));
 
-  // Filter cards for flat view
   const filteredCards = selectedCategory 
     ? communicationCards.filter(card => card.category === selectedCategory)
     : communicationCards;
@@ -119,7 +104,6 @@ const Index = () => {
       </header>
 
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Message display area */}
         <section className="mb-4">
           <MessageBar 
             selectedCards={selectedCards}
@@ -129,7 +113,6 @@ const Index = () => {
           />
         </section>
 
-        {/* Suggestions area */}
         <section className="mb-4">
           <h2 className="text-sm font-medium mb-2 text-aac-text">Suggestions</h2>
           <SuggestionBar 
@@ -139,7 +122,6 @@ const Index = () => {
           />
         </section>
 
-        {/* View mode toggle */}
         <section className="mb-4 flex justify-end">
           <button 
             onClick={toggleViewMode}
@@ -150,7 +132,6 @@ const Index = () => {
         </section>
 
         {viewMode === 'hierarchical' ? (
-          /* Hierarchical categories and cards */
           <section>
             <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
             <div className="space-y-4">
@@ -165,7 +146,6 @@ const Index = () => {
             </div>
           </section>
         ) : (
-          /* Flat view with category tabs and cards grid */
           <>
             <section className="mb-4">
               <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>

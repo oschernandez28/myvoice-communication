@@ -1,13 +1,15 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { CommunicationCard } from "@/types/aac";
 import { Button } from "@/components/ui/button";
 import { X, Volume2, Trash2 } from "lucide-react";
+import { HuggingFaceService } from "@/services/huggingFaceService";
+import PhraseOptions from "./PhraseOptions";
 
 interface MessageBarProps {
   selectedCards: CommunicationCard[];
   onRemoveCard: (index: number) => void;
-  onSpeakMessage: () => void;
+  onSpeakMessage: (message: string) => void;
   onClearAll: () => void;
 }
 
@@ -17,6 +19,29 @@ const MessageBar: React.FC<MessageBarProps> = ({
   onSpeakMessage,
   onClearAll
 }) => {
+  const [showPhraseOptions, setShowPhraseOptions] = useState(false);
+  const [phraseOptions, setPhraseOptions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSpeak = async () => {
+    setIsLoading(true);
+    try {
+      const message = selectedCards.map(card => card.label).join(" ");
+      const options = await HuggingFaceService.getPhraseOptions(message);
+      setPhraseOptions(options);
+      setShowPhraseOptions(true);
+    } catch (error) {
+      console.error('Error getting phrase options:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePhraseSelect = (phrase: string) => {
+    setShowPhraseOptions(false);
+    onSpeakMessage(phrase);
+  };
+
   if (selectedCards.length === 0) {
     return (
       <div className="flex items-center justify-center h-16 bg-aac-background rounded-lg border border-aac-border">
@@ -24,10 +49,6 @@ const MessageBar: React.FC<MessageBarProps> = ({
       </div>
     );
   }
-
-  const renderBuiltPhrase = () => {
-    return selectedCards.map(card => card.label).join(" ");
-  };
 
   return (
     <div className="flex flex-col space-y-2">
@@ -50,7 +71,7 @@ const MessageBar: React.FC<MessageBarProps> = ({
           ))}
         </div>
         <p className="text-sm text-gray-600 text-center border-t pt-2">
-          {renderBuiltPhrase()}
+          {selectedCards.map(card => card.label).join(" ")}
         </p>
       </div>
       <div className="flex justify-end space-x-2">
@@ -63,13 +84,22 @@ const MessageBar: React.FC<MessageBarProps> = ({
           <Trash2 size={16} className="mr-1" /> Clear
         </Button>
         <Button 
-          onClick={onSpeakMessage} 
+          onClick={handleSpeak}
           size="sm"
           className="bg-aac-teal hover:bg-aac-blue text-white"
+          disabled={isLoading}
         >
-          <Volume2 size={16} className="mr-1" /> Speak
+          <Volume2 size={16} className="mr-1" />
+          {isLoading ? "Generating..." : "Speak"}
         </Button>
       </div>
+
+      <PhraseOptions 
+        isOpen={showPhraseOptions}
+        options={phraseOptions}
+        onSelect={handlePhraseSelect}
+        onClose={() => setShowPhraseOptions(false)}
+      />
     </div>
   );
 };
