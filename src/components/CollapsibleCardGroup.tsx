@@ -1,9 +1,13 @@
 
-import React, { useState } from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import React from "react";
 import { CardCategory, CommunicationCard } from "@/types/aac";
 import CommunicationCardComponent from "@/components/CommunicationCard";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
 interface CollapsibleCardGroupProps {
@@ -17,8 +21,6 @@ const CollapsibleCardGroup: React.FC<CollapsibleCardGroupProps> = ({
   cards,
   onCardClick
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   // Get category color class
   const getCategoryColorClass = (color: string) => {
     if (color.startsWith('aac-')) {
@@ -28,30 +30,29 @@ const CollapsibleCardGroup: React.FC<CollapsibleCardGroupProps> = ({
   };
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mb-4">
-      <CollapsibleTrigger className={cn(
-        "w-full flex items-center justify-between p-3 rounded-xl shadow-md cursor-pointer",
-        getCategoryColorClass(category.color)
-      )}>
-        <div className="flex items-center">
+    <Accordion type="single" collapsible className="mb-4">
+      <AccordionItem value={category.id} className="border-none">
+        <AccordionTrigger className={cn(
+          "p-3 rounded-xl shadow-md",
+          getCategoryColorClass(category.color)
+        )}>
           <h3 className="text-xl font-medium">{category.name}</h3>
-        </div>
-        {isOpen ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
-      </CollapsibleTrigger>
-      
-      <CollapsibleContent className="pt-3">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {cards.map((card) => (
-            <CommunicationCardComponent
-              key={card.id}
-              card={card}
-              onClick={onCardClick}
-            />
-          ))}
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
+        </AccordionTrigger>
+        <AccordionContent className="pt-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {cards.map((card) => (
+              <CommunicationCardComponent
+                key={card.id}
+                card={card}
+                onClick={onCardClick}
+              />
+            ))}
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 };
 
 export default CollapsibleCardGroup;
+
