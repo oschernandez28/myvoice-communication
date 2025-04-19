@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { HistoryEntry } from '@/types/aac';
+import { Volume2 } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
