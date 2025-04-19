@@ -30,16 +30,21 @@ const CollapsibleCardGroup: React.FC<CollapsibleCardGroupProps> = ({
   };
 
   return (
-    <Accordion type="single" collapsible className="mb-4">
-      <AccordionItem value={category.id} className="border-none">
-        <AccordionTrigger className={cn(
-          "p-3 rounded-xl shadow-md",
-          getCategoryColorClass(category.color)
-        )}>
-          <h3 className="text-xl font-medium">{category.name}</h3>
+    <Accordion type="single" collapsible className="mb-6">
+      <AccordionItem value={category.id} className="border-none shadow-lg rounded-2xl overflow-hidden">
+        <AccordionTrigger 
+          className={cn(
+            "p-6 w-full transition-all hover:no-underline",
+            "hover:opacity-90 hover:brightness-95",
+            getCategoryColorClass(category.color)
+          )}
+        >
+          <div className="w-full flex items-center justify-between">
+            <h3 className="text-2xl font-bold">{category.name}</h3>
+          </div>
         </AccordionTrigger>
-        <AccordionContent className="pt-3">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <AccordionContent className="p-4 bg-white">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {cards.map((card) => (
               <CommunicationCardComponent
                 key={card.id}
