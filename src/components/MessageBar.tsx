@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { CommunicationCard } from "@/types/aac";
 import { Button } from "@/components/ui/button";
@@ -11,13 +10,15 @@ interface MessageBarProps {
   onRemoveCard: (index: number) => void;
   onSpeakMessage: (message: string) => void;
   onClearAll: () => void;
+  onSaveHistory?: (phrase: string) => void;
 }
 
 const MessageBar: React.FC<MessageBarProps> = ({
   selectedCards,
   onRemoveCard,
   onSpeakMessage,
-  onClearAll
+  onClearAll,
+  onSaveHistory
 }) => {
   const [showPhraseOptions, setShowPhraseOptions] = useState(false);
   const [phraseOptions, setPhraseOptions] = useState<string[]>([]);
@@ -40,6 +41,10 @@ const MessageBar: React.FC<MessageBarProps> = ({
   const handlePhraseSelect = (phrase: string) => {
     setShowPhraseOptions(false);
     onSpeakMessage(phrase);
+    
+    if (onSaveHistory && selectedCards.length > 0) {
+      onSaveHistory(phrase);
+    }
   };
 
   if (selectedCards.length === 0) {

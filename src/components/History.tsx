@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HistoryEntry, CommunicationCard } from '@/types/aac';
+import { HistoryEntry } from '@/types/aac';
 import {
   Accordion,
   AccordionContent,
@@ -19,14 +19,17 @@ const History: React.FC<HistoryProps> = ({ entries, onPhraseSelect }) => {
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
       <h2 className="text-lg font-semibold mb-4">Phrase History</h2>
       {entries.length === 0 ? (
-        <p className="text-gray-500 text-sm">No phrases yet</p>
+        <p className="text-gray-500 text-sm italic">Your phrase history will appear here</p>
       ) : (
         <Accordion type="single" collapsible className="w-full">
           {entries.map((entry) => (
             <AccordionItem key={entry.id} value={entry.id}>
-              <AccordionTrigger className="text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-600">
+              <AccordionTrigger className="text-sm py-3 hover:no-underline">
+                <div className="flex items-center justify-between w-full">
+                  <span className="text-gray-700 font-medium truncate mr-2">
+                    {entry.selectedPhrase}
+                  </span>
+                  <span className="text-xs text-gray-500 whitespace-nowrap">
                     {format(new Date(entry.timestamp), 'MMM d, h:mm a')}
                   </span>
                 </div>
@@ -46,9 +49,10 @@ const History: React.FC<HistoryProps> = ({ entries, onPhraseSelect }) => {
                   </div>
                   <button
                     onClick={() => onPhraseSelect(entry.selectedPhrase)}
-                    className="w-full text-left p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors text-sm"
+                    className="w-full text-left p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors text-sm flex items-center gap-1"
                   >
-                    {entry.selectedPhrase}
+                    <Volume2 size={14} className="text-aac-teal" />
+                    <span>Speak this phrase again</span>
                   </button>
                 </div>
               </AccordionContent>

@@ -84,7 +84,7 @@ const Index = () => {
     speechService.speak(message);
   };
 
-  const handlePhraseSelect = (phrase: string) => {
+  const handleSaveHistory = (phrase: string) => {
     const newEntry: HistoryEntry = {
       id: Date.now().toString(),
       timestamp: new Date(),
@@ -92,9 +92,10 @@ const Index = () => {
       selectedPhrase: phrase
     };
     setHistory(prevHistory => [newEntry, ...prevHistory]);
-    
-    const speechService = getSpeechService();
-    speechService.speak(phrase);
+  };
+
+  const handlePhraseSelect = (phrase: string) => {
+    handleSpeakMessage(phrase);
   };
 
   const toggleViewMode = () => {
@@ -126,6 +127,7 @@ const Index = () => {
             onRemoveCard={handleRemoveCard}
             onSpeakMessage={handleSpeakMessage}
             onClearAll={handleClearAll}
+            onSaveHistory={handleSaveHistory}
           />
         </section>
 
