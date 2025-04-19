@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getSpeechService } from "@/services/speechService";
 import { useCardSelection } from "@/hooks/useCardSelection";
 import { CardDisplay } from "@/components/CardDisplay";
@@ -18,9 +18,16 @@ const Index = () => {
     handleRemoveCard,
     handleClearAll,
   } = useCardSelection();
+  
+  // Create a single instance of the speech service
+  const speechService = getSpeechService();
+
+  useEffect(() => {
+    // Log the selected voice when component mounts
+    console.log("Current voice:", speechService.getCurrentVoice()?.name);
+  }, []);
 
   const handleSpeakMessage = (message: string) => {
-    const speechService = getSpeechService();
     speechService.speak(message);
   };
 

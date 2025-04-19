@@ -18,9 +18,15 @@ export class SpeechService {
   private loadVoices(): void {
     this.voices = this.synth.getVoices();
     
-    // Try to find a child-friendly voice
+    // Prioritize finding a child's voice
     this.preferredVoice = this.voices.find(
       voice => voice.name.toLowerCase().includes("child")
+    ) ||
+    this.voices.find(
+      voice => voice.name.toLowerCase().includes("kid")
+    ) ||
+    this.voices.find(
+      voice => voice.name.toLowerCase().includes("young")
     ) ||
     this.voices.find(
       voice => voice.name.toLowerCase().includes("female") && voice.lang.startsWith("en")
@@ -29,6 +35,9 @@ export class SpeechService {
       voice => voice.lang.startsWith("en")
     ) ||
     this.voices[0];
+
+    console.log("Available voices:", this.voices.map(v => v.name));
+    console.log("Selected voice:", this.preferredVoice?.name);
   }
   
   public speak(text: string): void {
@@ -39,14 +48,15 @@ export class SpeechService {
     
     const utterance = new SpeechSynthesisUtterance(text);
     
-    // Use preferred voice if available
+    // Always ensure we're using the same preferred voice
     if (this.preferredVoice) {
       utterance.voice = this.preferredVoice;
+      console.log("Speaking with voice:", this.preferredVoice.name);
     }
     
-    // Child-friendly speech settings
+    // Child-friendly speech settings - make slightly higher pitched
     utterance.rate = 0.9;  // Slightly slower
-    utterance.pitch = 1.1; // Slightly higher pitch
+    utterance.pitch = 1.2; // Higher pitch for child-like voice
     utterance.volume = 1;
     
     this.synth.speak(utterance);
@@ -54,6 +64,14 @@ export class SpeechService {
   
   public stop(): void {
     this.synth.cancel();
+  }
+
+  public getVoices(): SpeechSynthesisVoice[] {
+    return this.voices;
+  }
+
+  public getCurrentVoice(): SpeechSynthesisVoice | null {
+    return this.preferredVoice;
   }
 }
 
