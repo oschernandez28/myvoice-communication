@@ -36,17 +36,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-aac-background p-4 md:p-8">
-      <header className="mb-6 flex items-center justify-between">
-        <div className="flex-grow text-center">
+      <header className="mb-6 flex items-center justify-center">
+        <div className="text-center">
           <h1 className="text-3xl font-bold text-aac-purple">MyVoice</h1>
           <p className="text-center text-aac-text opacity-75">
             Communication Cards for Everyone
           </p>
         </div>
-        <History 
-          entries={history} 
-          onPhraseSelect={handleSpeakMessage}
-        />
+        <div className="absolute right-8 top-8">
+          <History 
+            entries={history} 
+            onPhraseSelect={handleSpeakMessage}
+          />
+        </div>
       </header>
 
       <div className="max-w-4xl mx-auto space-y-6">
