@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { getSpeechService } from "@/services/speechService";
 import { useCardSelection } from "@/hooks/useCardSelection";
@@ -36,11 +35,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-aac-background p-4 md:p-8">
-      <header className="mb-6">
-        <h1 className="text-3xl font-bold text-center text-aac-purple">MyVoice</h1>
-        <p className="text-center text-aac-text opacity-75">
-          Communication Cards for Everyone
-        </p>
+      <header className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-center text-aac-purple">MyVoice</h1>
+          <p className="text-center text-aac-text opacity-75">
+            Communication Cards for Everyone
+          </p>
+        </div>
+        <History 
+          entries={history} 
+          onPhraseSelect={handleSpeakMessage}
+        />
       </header>
 
       <div className="max-w-4xl mx-auto space-y-6">
@@ -63,16 +68,7 @@ const Index = () => {
           />
         </section>
 
-        <div className="grid md:grid-cols-[2fr,1fr] gap-6">
-          <CardDisplay onCardClick={handleCardClick} />
-          
-          <div className="md:sticky md:top-4 self-start">
-            <History 
-              entries={history} 
-              onPhraseSelect={handleSpeakMessage}
-            />
-          </div>
-        </div>
+        <CardDisplay onCardClick={handleCardClick} />
       </div>
     </div>
   );
