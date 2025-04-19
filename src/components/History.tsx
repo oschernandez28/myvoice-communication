@@ -29,9 +29,19 @@ const History: React.FC<HistoryProps> = ({ entries, onPhraseSelect }) => {
                 <div className="flex items-center justify-between w-full">
                   <div className="flex flex-col items-start">
                     <span className="text-sm font-medium text-gray-900">Used cards:</span>
-                    <span className="text-xs text-gray-600">
-                      {entry.cards.map(card => card.label).join(" → ")}
-                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {entry.cards.map((card, index) => (
+                        <React.Fragment key={card.id}>
+                          <span className="inline-flex items-center gap-1">
+                            <span className="text-xl">{card.image}</span>
+                            <span className="text-xs text-gray-600">{card.label}</span>
+                          </span>
+                          {index < entry.cards.length - 1 && (
+                            <span className="text-gray-400">→</span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
                   </div>
                   <span className="text-xs text-gray-500 whitespace-nowrap ml-2">
                     {format(new Date(entry.timestamp), 'MMM d, h:mm a')}
