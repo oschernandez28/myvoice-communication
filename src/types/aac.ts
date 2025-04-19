@@ -1,4 +1,3 @@
-
 export interface CommunicationCard {
   id: string;
   label: string;
@@ -19,4 +18,11 @@ export interface CardCategory {
   id: string;
   name: string;
   color: string;
+}
+
+export interface HistoryEntry {
+  id: string;
+  timestamp: Date;
+  cards: CommunicationCard[];
+  selectedPhrase: string;
 }

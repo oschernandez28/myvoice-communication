@@ -8,6 +8,8 @@ import { CommunicationCard as CardType, CardSuggestion } from "@/types/aac";
 import { getPredictionService } from "@/services/predictionService";
 import { getSpeechService } from "@/services/speechService";
 import CollapsibleCardGroup from "@/components/CollapsibleCardGroup";
+import { HistoryEntry } from "@/types/aac";
+import History from "@/components/History";
 
 const Index = () => {
   const [selectedCards, setSelectedCards] = useState<CardType[]>([]);
@@ -15,6 +17,7 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [viewMode, setViewMode] = useState<'hierarchical' | 'flat'>('hierarchical');
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
 
   useEffect(() => {
     const initModel = async () => {
@@ -81,6 +84,19 @@ const Index = () => {
     speechService.speak(message);
   };
 
+  const handlePhraseSelect = (phrase: string) => {
+    const newEntry: HistoryEntry = {
+      id: Date.now().toString(),
+      timestamp: new Date(),
+      cards: [...selectedCards],
+      selectedPhrase: phrase
+    };
+    setHistory(prevHistory => [newEntry, ...prevHistory]);
+    
+    const speechService = getSpeechService();
+    speechService.speak(phrase);
+  };
+
   const toggleViewMode = () => {
     setViewMode(viewMode === 'hierarchical' ? 'flat' : 'hierarchical');
   };
@@ -122,53 +138,64 @@ const Index = () => {
           />
         </section>
 
-        <section className="mb-4 flex justify-end">
-          <button 
-            onClick={toggleViewMode}
-            className="px-3 py-1 bg-aac-teal text-white rounded-md text-sm"
-          >
-            {viewMode === 'hierarchical' ? 'Switch to Flat View' : 'Switch to Categories'}
-          </button>
-        </section>
+        <div className="grid md:grid-cols-[2fr,1fr] gap-6">
+          <div className="space-y-6">
+            <button 
+              onClick={toggleViewMode}
+              className="px-3 py-1 bg-aac-teal text-white rounded-md text-sm"
+            >
+              {viewMode === 'hierarchical' ? 'Switch to Flat View' : 'Switch to Categories'}
+            </button>
 
-        {viewMode === 'hierarchical' ? (
-          <section>
-            <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
-            <div className="space-y-4">
-              {cardsByCategory.map(({ category, cards }) => (
-                <CollapsibleCardGroup
-                  key={category.id}
-                  category={category}
-                  cards={cards}
-                  onCardClick={handleCardClick}
-                />
-              ))}
-            </div>
-          </section>
-        ) : (
-          <>
-            <section className="mb-4">
-              <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
-              <CategoryTabs 
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
-              />
-            </section>
-
-            <section>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {filteredCards.map((card) => (
-                  <CommunicationCard
-                    key={card.id}
-                    card={card}
-                    onClick={handleCardClick}
+            {viewMode === 'hierarchical' ? (
+              <section>
+                <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
+                <div className="space-y-4">
+                  {cardsByCategory.map(({ category, cards }) => (
+                    <CollapsibleCardGroup
+                      key={category.id}
+                      category={category}
+                      cards={cards}
+                      onCardClick={handleCardClick}
+                    />
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <>
+                <section className="mb-4">
+                  <h2 className="text-sm font-medium mb-2 text-aac-text">Categories</h2>
+                  <CategoryTabs 
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    onSelectCategory={setSelectedCategory}
                   />
-                ))}
-              </div>
-            </section>
-          </>
-        )}
+                </section>
+
+                <section>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                    {filteredCards.map((card) => (
+                      <CommunicationCard
+                        key={card.id}
+                        card={card}
+                        onClick={handleCardClick}
+                      />
+                    ))}
+                  </div>
+                </section>
+              </>
+            )}
+          </div>
+          
+          <div className="md:sticky md:top-4 self-start">
+            <History 
+              entries={history} 
+              onPhraseSelect={(phrase) => {
+                handlePhraseSelect(phrase);
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
