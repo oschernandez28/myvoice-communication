@@ -27,33 +27,29 @@ const History: React.FC<HistoryProps> = ({ entries, onPhraseSelect }) => {
             <AccordionItem key={entry.id} value={entry.id}>
               <AccordionTrigger className="text-sm py-3 hover:no-underline">
                 <div className="flex items-center justify-between w-full">
-                  <span className="text-gray-700 font-medium truncate mr-2">
-                    {entry.selectedPhrase}
-                  </span>
-                  <span className="text-xs text-gray-500 whitespace-nowrap">
+                  <div className="flex flex-col items-start">
+                    <span className="text-sm font-medium text-gray-900">Used cards:</span>
+                    <span className="text-xs text-gray-600">
+                      {entry.cards.map(card => card.label).join(" → ")}
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-500 whitespace-nowrap ml-2">
                     {format(new Date(entry.timestamp), 'MMM d, h:mm a')}
                   </span>
                 </div>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-3 py-2">
-                  <div className="flex flex-wrap gap-2">
-                    {entry.cards.map((card, idx) => (
-                      <div
-                        key={`${card.id}-${idx}`}
-                        className="flex flex-col items-center bg-gray-100 rounded p-2"
-                      >
-                        <span className="text-2xl mb-1">{card.image}</span>
-                        <span className="text-xs">{card.label}</span>
-                      </div>
-                    ))}
+                  <div className="bg-gray-50 p-3 rounded-md">
+                    <p className="text-sm font-medium text-gray-900 mb-1">Generated phrase:</p>
+                    <p className="text-sm text-gray-700">{entry.selectedPhrase}</p>
                   </div>
                   <button
                     onClick={() => onPhraseSelect(entry.selectedPhrase)}
                     className="w-full text-left p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors text-sm flex items-center gap-1"
                   >
                     <Volume2 size={14} className="text-aac-teal" />
-                    <span>Speak this phrase again</span>
+                    <span>Speak this phrase</span>
                   </button>
                 </div>
               </AccordionContent>
