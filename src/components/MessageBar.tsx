@@ -32,22 +32,26 @@ const MessageBar: React.FC<MessageBarProps> = ({
   return (
     <div className="flex flex-col space-y-2">
       <div className="bg-white rounded-lg border border-aac-border p-4">
-        <p className="text-lg font-medium mb-2">{renderBuiltPhrase()}</p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-4 mb-4">
           {selectedCards.map((card, index) => (
-            <div key={`${card.id}-${index}`} 
-                 className="flex items-center bg-gray-100 rounded-md px-2 py-1">
-              <span className="mr-1">{card.image}</span>
-              <span className="text-sm">{card.label}</span>
+            <div 
+              key={`${card.id}-${index}`} 
+              className="flex flex-col items-center bg-gray-100 rounded-lg p-3 relative group"
+            >
               <button 
                 onClick={() => onRemoveCard(index)}
-                className="ml-1 text-gray-500 hover:text-gray-700"
+                className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
               >
-                <X size={14} />
+                <X size={14} className="text-gray-500" />
               </button>
+              <span className="text-4xl mb-2">{card.image}</span>
+              <span className="text-sm text-center">{card.label}</span>
             </div>
           ))}
         </div>
+        <p className="text-sm text-gray-600 text-center border-t pt-2">
+          {renderBuiltPhrase()}
+        </p>
       </div>
       <div className="flex justify-end space-x-2">
         <Button 
