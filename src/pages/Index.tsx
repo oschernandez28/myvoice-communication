@@ -6,6 +6,7 @@ import { CardDisplay } from "@/components/CardDisplay";
 import SuggestionBar from "@/components/SuggestionBar";
 import MessageBar from "@/components/MessageBar";
 import History from "@/components/History";
+import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { HistoryEntry } from "@/types/aac";
 
 const Index = () => {
@@ -42,15 +43,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-aac-background p-4 md:p-8">
-      <header className="mb-6 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-aac-purple">MyVoice</h1>
-          <p className="text-center text-aac-text opacity-75">
+    <div className="min-h-screen bg-aac-background dark:bg-gray-900 p-4 md:p-8">
+      <header className="mb-6 flex items-center justify-center relative">
+        <div className="absolute left-8 top-0">
+          <DarkModeToggle />
+        </div>
+        <div className="flex-grow text-center">
+          <h1 className="text-3xl font-bold text-aac-purple dark:text-aac-blue">MyVoice</h1>
+          <p className="text-center text-aac-text dark:text-gray-300 opacity-75">
             Communication Cards for Everyone
           </p>
         </div>
-        <div className="absolute right-8 top-8">
+        <div className="absolute right-8 top-0">
           <History 
             entries={history} 
             onPhraseSelect={handleSpeakMessage}
@@ -70,7 +74,7 @@ const Index = () => {
         </section>
 
         <section className="mb-4">
-          <h2 className="text-sm font-medium mb-2 text-aac-text">Suggestions</h2>
+          <h2 className="text-sm font-medium mb-2 text-aac-text dark:text-gray-300">Suggestions</h2>
           <SuggestionBar 
             suggestions={suggestions} 
             onSelectSuggestion={handleCardClick}
