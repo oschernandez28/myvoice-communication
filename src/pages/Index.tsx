@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { getSpeechService } from "@/services/speechService";
 import { useCardSelection } from "@/hooks/useCardSelection";
@@ -23,7 +24,7 @@ const Index = () => {
   const speechService = getSpeechService();
 
   useEffect(() => {
-    // Log the selected voice when component mounts
+    // Log the current voice when component mounts
     console.log("Current voice:", speechService.getCurrentVoice()?.name);
   }, []);
 
@@ -45,20 +46,12 @@ const Index = () => {
     <>
       <Navbar />
       <div className="min-h-screen bg-aac-background p-4 md:p-8 pt-20">
-        <header className="mb-6 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-aac-purple">MyVoice</h1>
-            <p className="text-center text-aac-text opacity-75">
-              Communication Cards for Everyone
-            </p>
-          </div>
-          <div className="absolute right-8 top-24 md:top-28">
-            <History 
-              entries={history} 
-              onPhraseSelect={handleSpeakMessage}
-            />
-          </div>
-        </header>
+        <div className="absolute right-8 top-24 md:top-28">
+          <History 
+            entries={history} 
+            onPhraseSelect={handleSpeakMessage}
+          />
+        </div>
 
         <div className="max-w-4xl mx-auto space-y-6">
           <section className="mb-4">
