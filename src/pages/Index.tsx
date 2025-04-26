@@ -45,8 +45,8 @@ const Index = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-aac-background p-4 md:p-8 pt-20">
-        <div className="absolute right-8 top-24 md:top-28">
+      <div className="min-h-screen bg-aac-background p-4 md:p-8 pt-32">
+        <div className="absolute right-8 top-36 md:top-40">
           <History 
             entries={history} 
             onPhraseSelect={handleSpeakMessage}
