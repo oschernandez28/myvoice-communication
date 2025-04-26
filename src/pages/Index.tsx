@@ -43,17 +43,17 @@ const Index = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="min-h-screen bg-aac-background p-4 md:p-8 pt-40">
-        <div className="absolute right-8 top-44 md:top-48">
+      <div className="pt-20 min-h-screen bg-aac-background p-4 md:p-8">
+        <div className="absolute right-8 top-24 md:top-28">
           <History 
             entries={history} 
             onPhraseSelect={handleSpeakMessage}
           />
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6 mt-8">
           <section className="mb-4">
             <MessageBar 
               selectedCards={selectedCards}
@@ -76,7 +76,7 @@ const Index = () => {
           <CardDisplay onCardClick={handleCardClick} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
