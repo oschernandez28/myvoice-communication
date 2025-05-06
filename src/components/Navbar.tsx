@@ -9,7 +9,7 @@ const Navbar = () => {
         <div className="flex flex-row items-center gap-2">
           <a href="/" className="flex items-center gap-2">
             <img
-              src="/lovable-uploads/c568f265-cd86-464a-81fd-8f4ef4c8eebb.png"
+              src="/images/c568f265-cd86-464a-81fd-8f4ef4c8eebb.png"
               alt="MyVoice Logo"
               className="h-10 w-10"
             />
