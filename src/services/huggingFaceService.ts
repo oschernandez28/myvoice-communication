@@ -17,13 +17,11 @@ export class HuggingFaceService {
         },
         body: JSON.stringify({
           inputs: input,
-          parameters: {
-            do_sample: true,
-            top_k: 50,
-            top_p: 0.95,
-            temperature: 0.8,
-            num_return_sequences: 3
-          }
+          do_sample: true,
+          top_k: 50,
+          top_p: 0.95,
+          temperature: 0.8,
+          num_return_sequences: 3
         })
       });
       
